@@ -128,3 +128,25 @@ function regUserToDB1(jsonData,token) {
         }
     });
 }
+const updateToken=()=> {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            saveToLocalStorage('user', JSON.stringify(user));
+            user.getIdToken().then(idToken => {
+                saveTokenToLocalStorage(idToken);
+            });
+            if (!user.emailVerified) {
+                saveToLocalStorage('emailVerified', false);
+            }
+        } else {
+            localStorage.removeItem('styldod-token');
+            localStorage.removeItem('userType');
+        }
+    });
+    
+    window.onload = function () {
+    updateToken();
+};
+
+
+
