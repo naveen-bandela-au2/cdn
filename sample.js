@@ -75,6 +75,19 @@ const emailPasswordLogin=()=>{
         );
 }
 
+const forgotPassword=()=>{
+    firebase.auth().sendPasswordResetEmail($("#forgotuserEmail").val()).then(function () {
+        $('.w-form-done').text('Password reset link sent.').fadeIn().delay(3000).fadeOut();
+        }).catch(function (error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode == 'auth/invalid-email') {
+        $('.w-form-fail').text(errorMessage).fadeIn().delay(3000).fadeOut();
+        } else if (errorCode == 'auth/user-not-found') {
+        $('.w-form-fail').text(errorMessage).fadeIn().delay(3000).fadeOut();
+        }
+        });
+}
 
 const socialLogin=(provider)=>{
     var gProvider = new firebase.auth.GoogleAuthProvider();  
