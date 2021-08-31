@@ -72,3 +72,16 @@ const socialLogin=(provider)=>{
     
     });
 }
+
+function regUserToDB1(jsonData,token) {
+        console.log('Test3', jsonData, token)
+    return $.ajax({
+        type: "POST",
+    url: `${apiUrl}/user/register`,
+    data: jsonData,
+    dataType: "json",
+    headers: {
+        "Authorization": "Bearer " + token
+        }
+    });
+}
