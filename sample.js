@@ -43,3 +43,32 @@ if( validateUsername()&&validateUserType()&&validateEmail()&&validatePwd()&&aggr
     });
     }
 }
+
+
+
+const socialLogin=(provider)=>{
+    var gProvider = new firebase.auth.GoogleAuthProvider();  
+    var fProvider = new firebase.auth.FacebookAuthProvider();
+
+    firebase.auth()
+    .signInWithPopup(provider=="facebook"?fProvider:gProvider).then(function(result) {
+      var user = result.user;
+    firebase.auth().currentUser.getIdToken().then(function(idToken) {
+      regUserToDB1({phone:user.phoneNumber},idToken).then((regPromise) => {
+    
+    localStorage.setItem("user", JSON.stringify(user));
+        saveTokenToLocalStorage(idToken)
+        window.location = "user-dashboard";
+    });
+    
+    }).catch(function(error) {
+      // Handle error
+      console.log('Error',error)
+    });
+    }).catch(function(error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    $('.w-form-fail').text(errorMessage).fadeIn().delay(3000).fadeOut();
+    
+    });
+}
