@@ -1,5 +1,6 @@
 
 const userSignUP=()=>{
+    console.log("git")
 if( validateUsername()&&validateUserType()&&validateEmail()&&validatePwd()&&aggreTerms()){
     firebase.auth().createUserWithEmailAndPassword($("#userEmail").val().trim(), $("#userPassword").val().trim()).then(
     auth => {
