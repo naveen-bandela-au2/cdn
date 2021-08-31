@@ -51,6 +51,29 @@ if( validateUsername()&&validateUserType()&&validateEmail()&&validatePwd()&&aggr
     }
 }
 
+const emailPasswordLogin=()=>{
+    firebase.auth().signInWithEmailAndPassword($("#userEmail").val().trim(), $("#userPassword").val().trim()).then(
+        auth => {
+        auth.user.getIdToken().then(idToken => {
+        saveTokenToLocalStorage(idToken);
+        localStorage.setItem("user",JSON.stringify(firebase.auth().currentUser)) 
+        
+        window.location = 'user-dashboard';
+        });
+        },
+        error => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/wrong-password') {
+        $('.w-form-fail').text('Wrong password.').fadeIn().delay(3000).fadeOut();
+        } else if (errorCode === 'auth/user-not-found') {
+        $('.w-form-fail').text('User not found.').fadeIn().delay(3000).fadeOut();
+        } else {
+        $('.w-form-fail').text(errorMessage).fadeIn().delay(3000).fadeOut();
+        }
+        }
+        );
+}
 
 
 const socialLogin=(provider)=>{
