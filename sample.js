@@ -1,3 +1,10 @@
+const saveTokenToLocalStorage=(token)=> {
+    try {
+    localStorage.setItem('styldod-token', token);
+    } catch (error) {
+    console.log('Failed to save user token');
+    }
+    }
 
 const userSignUP=()=>{
     console.log("git")
