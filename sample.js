@@ -143,10 +143,8 @@ const updateToken=()=> {
             localStorage.removeItem('userType');
         }
     });
+}
     
     window.onload = function () {
     updateToken();
 };
-
-
-
